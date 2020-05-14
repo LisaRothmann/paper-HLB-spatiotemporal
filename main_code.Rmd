@@ -109,12 +109,10 @@ Number of records
 length(hlbMG$codigo)
 ```
 
-
 Number of years monitored
 ```{r}
 hlb %>% 
   summarise(N_years = length(unique(year)))
-
 ```
 
 Number of Municipalities monitored
@@ -134,8 +132,6 @@ hlb %>%
   ungroup() %>% 
   summarise(n = n())
 ```
-
-
 Some new entries had no region alocated for it, so I just completed with the previous information using the municipality as reference
 
 ```{r}
@@ -185,8 +181,6 @@ hh %>%
   summarise(n = n())
 ```
 
-
-
 ## Area
 Farms' area
 
@@ -216,8 +210,6 @@ hh %>%
   summarise(area = mean(area, na.rm = T))
 ```
 
-
-
 Mean/median farm's area by municipality 
 
 ```{r}
@@ -228,9 +220,7 @@ hh %>%
             mean_area = mean(area, na.rm = T)) %>%
   arrange(desc(mean_area))
 
-
 ```
-
 
 Number and percent of farms with and without HLB
 
@@ -245,9 +235,7 @@ hh %>%
   group_by(presenca) %>% 
   summarise(n = n(), 
             percent = 100*n/1488)
-
 ```
-
 
 Number and percent of farms with and without HLB per region
 ```{r}
@@ -291,11 +279,9 @@ hh_hlb%>%
             )
 ```
 
-
-
 Number of orchards by species
 ```{r}
-hh %>% 
+zz <- hh %>% 
   group_by(codigo, produtor, propriedade) %>% 
   # filter(Semester ==2) %>% 
   mutate(cum_erradic = cumsum(count)) %>% 
@@ -307,8 +293,11 @@ hh %>%
   summarise(n  = n(),
             percent = (n /1488)*100
             )
-```
 
+#checking % total
+zz %>% 
+  summarise(total = sum(percent))
+```
 
 Number and percent of municipalities with and without HLB  
 ```{r}
@@ -326,10 +315,8 @@ hh %>%
   summarise(n = length(unique(municipio)), 
             percent = round(100*n/118, 2))
 
-
 # max(c("Absent","Present"))
 ```
-
 
 
 Mean area, median and total of farms with and without HLB
@@ -363,7 +350,6 @@ hh %>%
   scale_fill_grey()
 ```
 
-
 Number of farms over the years per region
 ```{r}
 hh %>%
@@ -388,7 +374,6 @@ hh %>%
   filter(year == "2018", Semester == 2) %>% 
   summarise(sum(total_plantas))
 ```
-
 
 Total of plants removed
 ```{r}
@@ -534,8 +519,6 @@ hh_hlb %>%
 # ggsave("figs/mosaic_rgio_area.png",height = 3.5,width = 6)
 ```
 
-
-
 ```{r}
 hh_hlb %>% 
   group_by(codigo, produtor, propriedade) %>% 
@@ -556,8 +539,6 @@ hh_hlb %>%
   arrange(desc(region))
 
 ```
-
-
 
 ## figure combo
 
@@ -670,11 +651,6 @@ labels = c("D","E","F"), nrow = 1,scale = 0.9
 combo_plants
 ```
 
-
-
-
-
-
 ```{r}
 hh_hlb %>% 
   group_by(codigo, produtor, propriedade) %>% 
@@ -690,7 +666,6 @@ hh_hlb %>%
             perc = round((prev/n)*100,2)) %>% 
   arrange(desc(region))
 ```
-
 
 ```{r}
 hh %>% 
@@ -758,8 +733,6 @@ hh_hlb %>%
   group_by(region, class) %>% 
   summarise(n= n()) %>% 
   arrange(desc(region))
-  
-
 ```
 
 ```{r}
@@ -774,7 +747,6 @@ hh_hlb %>%
 ```
 
 ```{r}
-
 hh_hlb %>% 
   filter(presenca == "Present") %>% 
   group_by(codigo, municipio, produtor, region, class, propriedade) %>% 
@@ -787,8 +759,6 @@ hh_hlb %>%
 ```
 
 specie and area
-
-
 
 # Temporal progress
 
@@ -818,7 +788,6 @@ hh_hlb %>%
 )
 # ggsave("figs/removed_mun.png", dpi = 600, height = 7, width = 7)
 ```
-
 
 ```{r}
 hh_hlb %>% 
